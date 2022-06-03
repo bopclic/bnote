@@ -1,3 +1,4 @@
+import 'package:bnote/constants/routes.dart';
 import 'package:bnote/firebase_options.dart';
 import 'package:bnote/views/login_view.dart';
 import 'package:bnote/views/register_view.dart';
@@ -16,9 +17,9 @@ void main() {
       ),
       home: const HomePage(),
       routes: {
-        '/login/': (context) => const LoginView(),
-        '/register/': (context) => const RegisterView(),
-        '/notes/': (context) => const NotesView(),
+        loginRoute: (context) => const LoginView(),
+        registerRoute: (context) => const RegisterView(),
+        notesRoute: (context) => const NotesView(),
       },
     ),
   );
@@ -80,7 +81,7 @@ class _NotesViewState extends State<NotesView> {
                   if (shouldLogout) {
                     await FirebaseAuth.instance.signOut();
                     Navigator.of(context)
-                        .pushNamedAndRemoveUntil('/login/', (_) => false);
+                        .pushNamedAndRemoveUntil(loginRoute, (_) => false);
                   }
                   break;
               }
@@ -106,7 +107,7 @@ Future<bool> showLogOutDialog(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: const Text('Sign out'),
+        title: const Text('Log out'),
         content: const Text('Are you sure you want to log out?'),
         actions: [
           TextButton(
@@ -119,7 +120,7 @@ Future<bool> showLogOutDialog(BuildContext context) {
             onPressed: () {
               Navigator.of(context).pop(true);
             },
-            child: const Text('Sign out'),
+            child: const Text('Log out'),
           ),
         ],
       );
