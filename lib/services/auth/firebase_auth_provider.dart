@@ -4,7 +4,10 @@ import 'package:bnote/services/auth/auth_exceptions.dart';
 
 import 'package:firebase_auth/firebase_auth.dart'
     show FirebaseAuth, FirebaseAuthException;
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+import '../../firebase_options.dart';
 
 class FirebaseAuthProvider implements AuthProvider {
   @override
@@ -95,5 +98,11 @@ class FirebaseAuthProvider implements AuthProvider {
     } else {
       throw UserNotLoggedInAuthException();
     }
+  }
+
+  @override
+  Future<void> initialize() async {
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
   }
 }
